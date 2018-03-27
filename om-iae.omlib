@@ -1,0 +1,21 @@
+
+;;;===================================================
+;;;
+;;; OM-IAE (ISMM Audio Engine)
+;;; Jean Bresson, Diemo Schwarz
+;;;
+;;;===================================================
+
+(:om-lib
+ (:version 0.1)
+ (:source-files 
+  (:pathname (:directory (:relative "sources")) (:name "iae-init"))
+  (:pathname (:directory (:relative "sources")) (:name "iae-bindings"))
+  (:pathname (:directory (:relative "sources")) (:name "iae-om-objects"))
+  )
+ (:symbols 
+  (:classes "iae::IAE" "iae::IAE-Grain" "iae::IAE-Request")
+  (:functions "iae::iae-synth" "iae::iae-synth-desc"))
+ (:author "J. Bresson, D. Schwarz (2016)")
+ )
+
