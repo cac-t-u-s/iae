@@ -51,10 +51,10 @@
 <descriptor>, <value>, and <weight> can be single values or lists (of the same length!).
 "))
 
-(defmethod om::additional-class-attributes ((self iae::IAE-grain))
+(defmethod om::additional-class-attributes ((self IAE-grain))
   '(gain attack release outputgains outputdelays iae-params))
 
-(defmethod om::item-get-duration ((self iae::IAE-grain)) (iae::duration self))
+(defmethod om::item-get-duration ((self IAE-grain)) (duration self))
 
 
 ;;; utils to generate random grains / requests
@@ -95,22 +95,22 @@
  (:documentation "IAE-container is a container for granular synthesis events that are computed dynamically from an IAE object") 
  )
 
-(defmethod om::additional-class-attributes ((self iae::IAE-container)) '(iae::max-dur))
-(defmethod om::data-stream-frames-slot ((self iae::IAE-container)) 'iae::grains)
+(defmethod om::additional-class-attributes ((self IAE-container)) '(max-dur))
+(defmethod om::data-stream-frames-slot ((self IAE-container)) 'grains)
 
-(defmethod om::play-obj? ((self iae::IAE-container)) t)
-(defmethod om::get-obj-dur ((self iae::IAE-container)) (iae::max-dur self))
+(defmethod om::play-obj? ((self IAE-container)) t)
+(defmethod om::get-obj-dur ((self IAE-container)) (max-dur self))
 
 
-(defmethod om::om-init-instance :after ((self iae::IAE-container) &optional initargs)
+(defmethod om::om-init-instance :after ((self IAE-container) &optional initargs)
   
   (when (iae-obj self)
     
     (om::om-print-dbg "Initializing IAE-container for ~A" (list self) "OM-IAE")
     
-    (let* ((sr (iae::samplerate (iae-obj self)))
-           (size (round (* (iae::max-dur self) sr) 1000))
-           (nch (iae::channels (iae-obj self))))
+    (let* ((sr (samplerate (iae-obj self)))
+           (size (round (* (max-dur self) sr) 1000))
+           (nch (channels (iae-obj self))))
     
       (om::set-object-time-window self 100)
       
@@ -120,7 +120,7 @@
                                                    collect
                                                    (fli::allocate-foreign-object :type :float :nelems size :initial-element 0.0)))))
         
-        (setf (iae::buffer-player self) 
+        (setf (buffer-player self) 
               (om::make-player-from-buffer audio-buffer size nch sr))
         
         )))
@@ -129,9 +129,9 @@
   )
 
 
-(defmethod om::om-cleanup ((self iae::IAE-container))
-  (when (iae::buffer-player self) 
-    (om::free-buffer-player (iae::buffer-player self))))
+(defmethod om::om-cleanup ((self IAE-container))
+  (when (buffer-player self) 
+    (om::free-buffer-player (buffer-player self))))
 
 
 
@@ -176,15 +176,15 @@
 ;;; OM API/Editors 
 ;;;=================
 
-(defmethod om::data-frame-text-description ((self iae::IAE-grain)) 
-  `("IAE GRAIN:" ,(format nil "~D in source ~A" (iae::pos self) (iae::source self))))
+(defmethod om::data-frame-text-description ((self IAE-grain)) 
+  `("IAE GRAIN:" ,(format nil "~D in source ~A" (pos self) (source self))))
 
-(defmethod om::data-frame-text-description ((self iae::IAE-request)) 
-  `("IAE REQUEST:" ,(format nil "desc. ~A : ~D" (iae::descriptor self) (iae::value self))))
+(defmethod om::data-frame-text-description ((self IAE-request)) 
+  `("IAE REQUEST:" ,(format nil "desc. ~A : ~D" (descriptor self) (value self))))
 
 
 ;;; (0 100) is the reference range
-(defmethod om::y-range-for-object ((self iae::IAE-Container)) '(-10 110))
+(defmethod om::y-range-for-object ((self IAE-Container)) '(-10 110))
   
 #|
   (let ((reference-descriptor 
@@ -199,16 +199,15 @@
 
 ;;; GRAPHICAL ATTRIBUTES FOR GRANULAR GRAINS
 
-(defmethod om::get-frame-color ((self iae::IAE-grain)) 
+(defmethod om::get-frame-color ((self IAE-grain)) 
   (oa::om-make-color-alpha (om::get-midi-channel-color (1+ (source self))) 0.5))
 
-(defmethod om::get-frame-sizey ((self iae::IAE-grain)) 5) 
+(defmethod om::get-frame-sizey ((self IAE-grain)) 5) 
 
-(defmethod om::get-frame-posy ((self iae::IAE-grain)) 
-  (pos self))
+(defmethod om::get-frame-posy ((self IAE-grain)) (pos self))
 
 
-(defmethod om::get-frame-area ((frame iae::IAE-grain) editor)
+(defmethod om::get-frame-area ((frame IAE-grain) editor)
   (let ((panel (om::active-panel editor))
         (container (om::object-value editor)))
     
@@ -228,21 +227,21 @@
 
 ;;; SPECIFIC GRAPHICAL ATTRIBUTES FOR DESCRIPTOR GRAINS
 
-(defmethod om::get-frame-color ((self iae::IAE-request)) 
-  (om::om-make-color-alpha (om::get-midi-channel-color (1+ (car (om::list! (iae::descriptor self))))) 0.5))
+(defmethod om::get-frame-color ((self IAE-request)) 
+  (om::om-make-color-alpha (om::get-midi-channel-color (1+ (car (om::list! (descriptor self))))) 0.5))
 
-(defmethod om::get-frame-posy ((self iae::IAE-request)) 
-  (car (om::list! (iae::value self))))
+(defmethod om::get-frame-posy ((self IAE-request)) 
+  (car (om::list! (value self))))
 
 
-(defmethod om::get-frame-area ((frame iae::IAE-request) editor)
+(defmethod om::get-frame-area ((frame IAE-request) editor)
   (let ((panel (om::active-panel editor))
         (container (om::object-value editor)))
     
     (values ;; x
             (om::x-to-pix panel (om::date frame))
             ;; y
-            (let* ((range-y (cadr (find (car (om::list! (iae::descriptor frame)))
+            (let* ((range-y (cadr (find (car (om::list! (descriptor frame)))
                                         (value-ranges container) :key #'car)))
                    (min-y (first range-y))
                    (max-y (second range-y)))
@@ -265,10 +264,10 @@
 
 ;;; add an audio grain in the IAE-container's buffer-player by copying from an existing audio buffer (coming out of IAE-synth)
 (defmethod iae-add-grain ((iae-c iae-container) (snd om::om-internal-sound) (at integer))
-  (when (iae::buffer-player iae-c)
-    (let* ((bp (iae::buffer-player iae-c))
+  (when (buffer-player iae-c)
+    (let* ((bp (buffer-player iae-c))
            (iae (iae-obj iae-c))
-           (nch (iae::channels iae))
+           (nch (channels iae))
            (pos (round (* at (om::bp-sample-rate bp)) 1000))
            (size (om::n-samples snd))
            (max-size (om::bp-size bp)))
@@ -287,33 +286,33 @@
             ))))))
 
 
-(defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-grain))
+(defmethod make-grain-from-frame ((self IAE-Container) (frame IAE-grain))
   (when (iae-obj self)
-    (iae::iae-synth (iae-obj self) 
-                    (source frame) (iae::pos frame) (iae::duration frame)
+    (iae-synth (iae-obj self) 
+                    (source frame) (pos frame) (duration frame)
                     :gain (gain frame) :attack (attack frame) :release (release frame)
                     :outputgains (outputgains frame) :outputdelays (outputdelays frame)
                     :other-iae-params (iae-params frame))))
 
-(defmethod make-grain-from-frame ((self iae::IAE-Container) (frame iae::IAE-request))
+(defmethod make-grain-from-frame ((self IAE-Container) (frame IAE-request))
  (when (iae-obj self)
-   (iae::iae-synth-desc (iae-obj self) 
-                        (iae::descriptor frame) (iae::value frame) (iae::weight frame) (iae::duration frame)
+   (iae-synth-desc (iae-obj self) 
+                        (descriptor frame) (value frame) (weight frame) (duration frame)
                         :gain (gain frame) :attack (attack frame) :release (release frame)
                         :outputgains (outputgains frame) :outputdelays (outputdelays frame)
                         :other-iae-params (iae-params frame))))
 
 
 ;;; VIRTUAL RUN / DUMP:
-(om::defmethod! iae-dump ((self iae::IAE-Container))
+(om::defmethod! iae-dump ((self IAE-Container))
   
   :doc "Generates a sound from the IAE-Containers contents and settings"
   
   (let* ((iae (iae-obj self))
-         (nch (iae::channels iae))
-         (sr (iae::samplerate iae))
-         (size (round (* (iae::max-dur self) sr) 1000))
-         (init-buffer (om::bp-buffer (iae::buffer-player self)))
+         (nch (channels iae))
+         (sr (samplerate iae))
+         (size (round (* (max-dur self) sr) 1000))
+         (init-buffer (om::bp-buffer (buffer-player self)))
          (out-buffer (om::make-audio-buffer nch size :float)))
     
     (om::get-computation-list-for-play self)
@@ -334,12 +333,12 @@
 
 ;;; PLAYER:
 ;;; reports actions to audio player
-(defmethod om::get-action-list-for-play ((object iae::IAE-Container) interval &optional parent)
+(defmethod om::get-action-list-for-play ((object IAE-Container) interval &optional parent)
   (om::external-player-actions object interval parent))
 
 
 ;;; This is the action performed when we "play" an IAE object
-(defmethod om::get-computation-list-for-play ((object iae::IAE-Container) &optional interval)
+(defmethod om::get-computation-list-for-play ((object IAE-Container) &optional interval)
   
   (if (iae-obj object)
     
@@ -360,18 +359,18 @@
   nil)
 
 
-(defmethod iae-reset ((self iae::IAE-Container))
-  (when (iae::buffer-player self)
-    (dotimes (c (om::bp-channels (iae::buffer-player self)))
-      (dotimes (i (om::bp-size (iae::buffer-player self)))
+(defmethod iae-reset ((self IAE-Container))
+  (when (buffer-player self)
+    (dotimes (c (om::bp-channels (buffer-player self)))
+      (dotimes (i (om::bp-size (buffer-player self)))
         (setf (fli:dereference 
-               (fli:dereference (om::bp-buffer (iae::buffer-player self)) :index c :type :pointer) 
+               (fli:dereference (om::bp-buffer (buffer-player self)) :index c :type :pointer) 
                :index i :type :float)
               0.0)))))
 
-(defmethod om::player-play-object ((self om::scheduler) (object iae::IAE-Container) caller &key parent interval)
+(defmethod om::player-play-object ((self om::scheduler) (object IAE-Container) caller &key parent interval)
   (declare (ignore parent))
-  (let ((bp (iae::buffer-player object)))
+  (let ((bp (buffer-player object)))
     (om::set-object-time-window object 2000)
     (if bp
       (om::start-buffer-player bp 
@@ -381,31 +380,31 @@
       (om::om-beep-msg "No BP initialized for IAE-Container!"))
     (call-next-method)))
 
-(defmethod om::player-stop-object ((self om::scheduler) (object iae::IAE-Container))
+(defmethod om::player-stop-object ((self om::scheduler) (object IAE-Container))
   (let ((current-state (om::state self)))
-    (if (iae::buffer-player object)
-        (om::stop-buffer-player (iae::buffer-player object))
+    (if (buffer-player object)
+        (om::stop-buffer-player (buffer-player object))
       (om::om-beep-msg "No BP initialized for IAE-Container!"))
     (unless (eq current-state :stop) 
       (iae-reset object))
     (call-next-method)))
 
-(defmethod om::player-pause-object ((self om::scheduler) (object iae::IAE-Container))
-  (if (iae::buffer-player object)
-      (om::pause-buffer-player (iae::buffer-player object))
+(defmethod om::player-pause-object ((self om::scheduler) (object IAE-Container))
+  (if (buffer-player object)
+      (om::pause-buffer-player (buffer-player object))
     (om::om-beep-msg "No BP initialized for IAE-Container!"))
   (call-next-method))
 
-(defmethod player-continue-object ((self om::scheduler) (object iae::IAE-Container))
-  (if (iae::buffer-player object)
-      (om::continue-buffer-player (iae::buffer-player object))
+(defmethod player-continue-object ((self om::scheduler) (object IAE-Container))
+  (if (buffer-player object)
+      (om::continue-buffer-player (buffer-player object))
     (om::om-beep-msg "No BP initialized for IAE-Container!"))
   (call-next-method))
 
-(defmethod om::set-object-time ((self iae::IAE-Container) time) 
+(defmethod om::set-object-time ((self IAE-Container) time) 
   (iae-reset self)
-  (when (iae::buffer-player self)
-    (om::jump-to-time (iae::buffer-player self) time))
+  (when (buffer-player self)
+    (om::jump-to-time (buffer-player self) time))
   (call-next-method))
 
 
