@@ -83,7 +83,7 @@
 
 (defclass! IAE-container (om::om-cleanup-mixin om::data-stream)
   ((iae-obj :accessor iae-obj :initarg :iae-obj :initform nil)
-   (grains :accessor grains :initarg :grains :initform nil :documentation "a list of timed-requests for granular synthesis")
+   (grains :initarg :grains :initform nil :documentation "a list of timed-requests for granular synthesis")
    (iae-params :accessor iae-params :initarg :iae-params :initform nil :documentation "a list of (name value(s)) for global IAE parameters")
 
    (max-dur :accessor max-dur :initform 10000 :documentation "max duration fo the audio output buffer [ms]")
@@ -95,10 +95,19 @@
   )
 
 (defmethod om::additional-class-attributes ((self IAE-container)) '(max-dur))
-(defmethod om::data-stream-frames-slot ((self IAE-container)) 'grains)
 
 (defmethod om::play-obj? ((self IAE-container)) t)
 (defmethod om::get-obj-dur ((self IAE-container)) (max-dur self))
+
+
+(defmethod initialize-instance ((self IAE-container) &rest initargs)
+  (call-next-method)
+  (om::data-stream-set-frames self (slot-value self 'grains))
+  (setf (slot-value self 'grains) nil)
+  self)
+
+(defmethod grains ((self IAE-container)) 
+  (om::data-stream-get-frames self))
 
 
 (defmethod om::om-init-instance :after ((self IAE-container) &optional initargs)
