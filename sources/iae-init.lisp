@@ -3,12 +3,12 @@
 ; OM# IAE (ISMM Audio Engine)
 ;============================================================================
 ;
-;   This program is free software. For information on usage 
+;   This program is free software. For information on usage
 ;   and redistribution, see the "LICENSE" file in this distribution.
 ;
 ;   This program is distributed in the hope that it will be useful,
 ;   but WITHOUT ANY WARRANTY; without even the implied warranty of
-;   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+;   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ;
 ;============================================================================
 ; File author: J. Bresson
@@ -16,19 +16,19 @@
 
 (in-package :om)
 
-(defpackage :IAE 
+(defpackage :IAE
   (:use :common-lisp :om :cl-user))
 
 (om::require-om-package "sound")
 
 (defun load-iae-lib ()
-  (let ((libpath (merge-pathnames 
-                  "lib/mac/iaeom.framework/iaeom" 
+  (let ((libpath (merge-pathnames
+                  "lib/mac/iaeom.framework/iaeom"
                   (om::mypathname (om::find-library "iae")))))
     (om-fi::om-load-foreign-library
-           "LIBIAEOM"
-           `((:macosx ,libpath)
-             (t (:default "libiaeom"))))
+     "LIBIAEOM"
+     `((:macosx ,libpath)
+       (t (:default "libiaeom"))))
     ))
 
 ;; load now
@@ -52,7 +52,7 @@
 (iae::iae_set_duration *iae* 200.0d0 0.0d0)
 (iae::iae_set_play *iae* t)
 (iae::iae_set_play *iae* nil)
-  
+
 
 (defparameter *audio-buffer* (om::make-audio-buffer 1 44100))
 (iae::iae_synth *iae* 44100 *audio-buffer* 1)
@@ -61,7 +61,7 @@
 
 (in-package :om)
 
-(defun get-iae-snd (size) 
+(defun get-iae-snd (size)
   (let ((buffer (make-audio-buffer 1 size)))
     (iae::iae_synth iae::*iae* 44100 buffer 1)
     (let ((snd (make-instance 'om::om-internal-sound :n-channels 1 :smpl-type :float
