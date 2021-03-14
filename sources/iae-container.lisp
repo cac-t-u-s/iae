@@ -406,4 +406,8 @@
     (om::jump-to-time (buffer-player self) time))
   (call-next-method))
 
+(defmethod om::set-time-callback ((self IAE-Container) time)
+  (when (buffer-player self)
+    (om::jump-to-time (buffer-player self) time))
+  (call-next-method))
 
