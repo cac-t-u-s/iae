@@ -106,7 +106,7 @@
   (setf (slot-value self 'grains) nil)
   self)
 
-(defmethod grains ((self IAE-container)) 
+(defmethod grains ((self IAE-container))
   (om::data-stream-get-frames self))
 
 
@@ -385,14 +385,14 @@
                                  :start-frame (if (car interval)
                                                   (round (* (car interval) (/ (om::bp-sample-rate bp) 1000.0)))
                                                 (or (car interval) 0)))
-      (om::om-beep-msg "No BP initialized for IAE-Container!"))
+      (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
     (call-next-method)))
 
 (defmethod om::player-stop-object ((self om::scheduler) (object IAE-Container))
   (let ((current-state (om::state self)))
     (if (buffer-player object)
         (om::stop-buffer-player (buffer-player object))
-      (om::om-beep-msg "No BP initialized for IAE-Container!"))
+      (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
     (unless (eq current-state :stop)
       (iae-reset object))
     (call-next-method)))
@@ -400,13 +400,13 @@
 (defmethod om::player-pause-object ((self om::scheduler) (object IAE-Container))
   (if (buffer-player object)
       (om::pause-buffer-player (buffer-player object))
-    (om::om-beep-msg "No BP initialized for IAE-Container!"))
+    (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
   (call-next-method))
 
 (defmethod player-continue-object ((self om::scheduler) (object IAE-Container))
   (if (buffer-player object)
       (om::continue-buffer-player (buffer-player object))
-    (om::om-beep-msg "No BP initialized for IAE-Container!"))
+    (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
   (call-next-method))
 
 (defmethod om::set-object-time ((self IAE-Container) time)
