@@ -447,3 +447,6 @@
     (om::jump-to-time (buffer-player self) time))
   (call-next-method))
 
+(defmethod om::reschedule-callback ((self IAE-Container) interval)
+  (declare (ignore interval))
+  (iae-reset self))
