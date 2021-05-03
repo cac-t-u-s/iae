@@ -353,18 +353,26 @@
       (loop for frame in (remove-if #'(lambda (date) (and interval (or (< date (car interval)) (>= date (cadr interval)))))
                                     (om::data-stream-get-frames object)
                                     :key 'om::date)
-            do
-            (make-iae-param-calls (iaeengine-ptr (iae-obj object)) (iae-params object)) ;; "global params"
+            collect
+            (list
+             (- (om::date frame) 100)
+             (om::date frame)
 
-            (iae-add-grain
-             object
-             (make-grain-from-frame object frame)
-             (om::date frame))
-            )
+             #'(lambda ()
 
-    (om::om-print "Error playing IAE-container: no IAE engine loaded!"))
+                 (make-iae-param-calls (iaeengine-ptr (iae-obj object)) (iae-params object)) ;; "global params"
 
-  nil)
+                 (iae-add-grain
+                  object
+                  (make-grain-from-frame object frame)
+                  (om::date frame))
+                 )
+             ))
+
+       (progn
+         (om::om-print "Error playing IAE-container: no IAE engine loaded!")
+         nil)
+       ))
 
 
 (defmethod iae-reset ((self IAE-Container))
