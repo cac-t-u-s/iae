@@ -404,7 +404,9 @@
 (defmethod om::player-play-object ((self om::scheduler) (object IAE-Container) caller &key parent interval)
   (declare (ignore parent))
   (let ((bp (buffer-player object)))
-    (om::set-object-time-window object 2000)
+
+    (om::set-object-time-window object 100)
+
     (if bp
         (om::start-buffer-player bp
                                  :start-frame (if (car interval)
