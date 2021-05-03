@@ -376,6 +376,23 @@
                :index i :type :float)
               0.0)))))
 
+
+(defmethod iae-reset-interval ((self IAE-Container) from-ms to-ms)
+  (when (buffer-player self)
+
+    (let* ((sr (om::bp-sample-rate (buffer-player self)))
+           (from (round (* from-ms sr) 1000))
+           (to (round (* to-ms sr) 1000)))
+
+    (dotimes (c (om::bp-channels (buffer-player self)))
+      (loop for i from from to to do
+           (setf (fli:dereference
+                  (fli:dereference (om::bp-buffer (buffer-player self)) :index c :type :pointer)
+                  :index i :type :float)
+                 0.0)))
+    )))
+
+
 (defmethod om::player-play-object ((self om::scheduler) (object IAE-Container) caller &key parent interval)
   (declare (ignore parent))
   (let ((bp (buffer-player object)))
