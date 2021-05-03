@@ -403,7 +403,7 @@
     (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
   (call-next-method))
 
-(defmethod player-continue-object ((self om::scheduler) (object IAE-Container))
+(defmethod om::player-continue-object ((self om::scheduler) (object IAE-Container))
   (if (buffer-player object)
       (om::continue-buffer-player (buffer-player object))
     (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
