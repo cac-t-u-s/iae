@@ -389,8 +389,8 @@
   (when (buffer-player self)
 
     (let* ((sr (om::bp-sample-rate (buffer-player self)))
-           (from (round (* from-ms sr) 1000))
-           (to (round (* to-ms sr) 1000)))
+           (from (if from-ms (round (* from-ms sr) 1000) 0))
+           (to (if to-ms (round (* to-ms sr) 1000) (1- (om::bp-size (buffer-player self))))))
 
     (dotimes (c (om::bp-channels (buffer-player self)))
       (loop for i from from to to do
