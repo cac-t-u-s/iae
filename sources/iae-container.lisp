@@ -355,7 +355,6 @@
             (list
              (- (om::date frame) 100)
              (om::date frame)
-
              #'(lambda ()
 
                  (make-iae-param-calls (iaeengine-ptr (iae-obj object)) (iae-params object)) ;; "global params"
@@ -367,10 +366,10 @@
                  )
              ))
 
-       (progn
-         (om::om-print "Error playing IAE-container: no IAE engine loaded!")
-         nil)
-       ))
+    (progn
+      (om::om-print "Error playing IAE-container: no IAE engine loaded!")
+      nil)
+    ))
 
 
 (defmethod iae-reset ((self IAE-Container))
@@ -390,13 +389,13 @@
            (from (if from-ms (round (* from-ms sr) 1000) 0))
            (to (if to-ms (round (* to-ms sr) 1000) (1- (om::bp-size (buffer-player self))))))
 
-    (dotimes (c (om::bp-channels (buffer-player self)))
-      (loop for i from from to to do
-           (setf (fli:dereference
-                  (fli:dereference (om::bp-buffer (buffer-player self)) :index c :type :pointer)
-                  :index i :type :float)
-                 0.0)))
-    )))
+      (dotimes (c (om::bp-channels (buffer-player self)))
+        (loop for i from from to to do
+              (setf (fli:dereference
+                     (fli:dereference (om::bp-buffer (buffer-player self)) :index c :type :pointer)
+                     :index i :type :float)
+                    0.0)))
+      )))
 
 
 (defmethod om::player-play-object ((self om::scheduler) (object IAE-Container) caller &key parent interval)
@@ -414,10 +413,13 @@
     (call-next-method)))
 
 (defmethod om::player-stop-object ((self om::scheduler) (object IAE-Container))
+
   (let ((current-state (om::state self)))
+
     (if (buffer-player object)
         (om::stop-buffer-player (buffer-player object))
       (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
+
     (unless (eq current-state :stop)
       (iae-reset object))
     (call-next-method)))
