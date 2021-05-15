@@ -120,8 +120,6 @@
            (size (round (* (max-dur self) sr) 1000))
            (nch (channels (iae-obj self))))
 
-      (om::set-object-time-window self 100)
-
       (let ((audio-buffer (fli::allocate-foreign-object
                            :type :pointer :nelems nch
                            :initial-contents (loop for c from 1 to nch
