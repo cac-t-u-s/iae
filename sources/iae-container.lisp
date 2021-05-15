@@ -353,7 +353,7 @@
                                     :key 'om::date)
             collect
             (list
-             (- (om::date frame) 100)
+             0
              (om::date frame)
              #'(lambda ()
 
