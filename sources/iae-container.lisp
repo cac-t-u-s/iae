@@ -413,6 +413,8 @@
 
     (om::set-object-time-window object 100)
 
+    (om::lock-edit object)
+
     (if bp
         (om::start-buffer-player bp
                                  :start-frame (if (car interval)
@@ -431,6 +433,9 @@
 
     (unless (eq current-state :stop)
       (iae-reset object))
+
+    (om::unlock-edit object)
+
     (call-next-method)))
 
 (defmethod om::player-pause-object ((self om::scheduler) (object IAE-Container))
