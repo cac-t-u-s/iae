@@ -321,7 +321,16 @@
          (init-buffer (om::bp-buffer (buffer-player self)))
          (out-buffer (om::make-audio-buffer nch size :float)))
 
-    (om::get-computation-list-for-play self)
+    (loop for frame in (om::data-stream-get-frames self)
+          do
+
+          (make-iae-param-calls (iaeengine-ptr iae) (iae-params self)) ;; "global params"
+
+          (iae-add-grain
+           self
+           (make-grain-from-frame self frame)
+           (om::date frame))
+          )
 
     (dotimes (ch nch)
       (dotimes (smp size)
