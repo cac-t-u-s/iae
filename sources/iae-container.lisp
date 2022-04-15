@@ -21,7 +21,7 @@
 
 
 ;;;============================================
-;;; DATA-STREAM ACTIONS FOR IAE-CONTAINER
+;;; DATA-TRACK ACTIONS FOR IAE-CONTAINER
 ;;;============================================
 
 (defclass! IAE-grain (om::data-frame)
@@ -81,7 +81,7 @@
 ;;; IAE-CONTAINER
 ;;;============================================
 
-(defclass! IAE-container (om::om-cleanup-mixin om::data-stream)
+(defclass! IAE-container (om::om-cleanup-mixin om::data-track)
   ((iae-obj :accessor iae-obj :initarg :iae-obj :initform nil)
    (grains :initarg :grains :initform nil :documentation "a list of timed-requests for granular synthesis")
    (iae-params :accessor iae-params :initarg :iae-params :initform nil :documentation "a list of (name value(s)) for global IAE parameters")
@@ -102,12 +102,12 @@
 
 (defmethod initialize-instance ((self IAE-container) &rest initargs)
   (call-next-method)
-  (om::data-stream-set-frames self (slot-value self 'grains))
+  (om::data-track-set-frames self (slot-value self 'grains))
   (setf (slot-value self 'grains) nil)
   self)
 
 (defmethod grains ((self IAE-container))
-  (om::data-stream-get-frames self))
+  (om::data-track-get-frames self))
 
 
 (defmethod om::om-init-instance :after ((self IAE-container) &optional initargs)
@@ -182,15 +182,22 @@
 ;;; OM API/Editors
 ;;;=================
 
+(defclass iae-editor (om::data-track-editor) ())
+(defmethod om::get-editor-class ((self IAE-Container)) 'iae-editor)
+
+(defmethod om::object-default-edition-params ((self iae-container))
+  '((:grid t)
+    (:x1 0) (:x2 nil)
+    (:y1 -10) (:y2 100))) ;;; (0 100) is the reference range
+
+(defmethod om::can-record ((self iae-editor)) nil)
+
 (defmethod om::data-frame-text-description ((self IAE-grain))
   `("IAE GRAIN:" ,(format nil "~D in source ~A" (pos self) (source self))))
 
 (defmethod om::data-frame-text-description ((self IAE-request))
   `("IAE REQUEST:" ,(format nil "desc. ~A : ~D" (descriptor self) (value self))))
 
-
-;;; (0 100) is the reference range
-(defmethod om::y-range-for-object ((self IAE-Container)) '(-10 110))
 
 #|
   (let ((reference-descriptor
@@ -220,14 +227,13 @@
     (values ;; x
             (om::x-to-pix panel (om::date frame))
             ;; y
-            (- (om::h panel)
-               (om::y-to-pix panel (* 100 (/ (om::get-frame-posy frame)
-                                             (or (second (second (find -1 (value-ranges container) :key #'car)))
-                                                 (max-dur container))))))
+            (om::y-to-pix panel (* 100 (/ (om::get-frame-posy frame)
+                                          (or (second (second (find -1 (value-ranges container) :key #'car)))
+                                              (max-dur container)))))
             ;; w
             (max 3 (om::dx-to-dpix panel (om::get-frame-graphic-duration frame)))
             ;; h
-            (min -3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
+            (max 3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
             )))
 
 
@@ -254,13 +260,12 @@
 
               (if (= min-y max-y) (setf max-y (1+ min-y))) ;; avoid /0
 
-              (- (om::h panel)
-                 (om::y-to-pix panel (* 100  (/ (- (om::get-frame-posy frame) min-y)
-                                                (- max-y min-y))))))
+              (om::y-to-pix panel (* 100  (/ (- (om::get-frame-posy frame) min-y)
+                                             (- max-y min-y)))))
             ;; w
             (max 3 (om::dx-to-dpix panel (om::get-frame-graphic-duration frame)))
             ;; h
-            (min -3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
+            (max 3 (om::dy-to-dpix panel (- (om::get-frame-sizey frame))))  ;; !! upwards
             )))
 
 
@@ -321,7 +326,7 @@
          (init-buffer (om::bp-buffer (buffer-player self)))
          (out-buffer (om::make-audio-buffer nch size :float)))
 
-    (loop for frame in (om::data-stream-get-frames self)
+    (loop for frame in (om::data-track-get-frames self)
           do
 
           (make-iae-param-calls (iaeengine-ptr iae) (iae-params self)) ;; "global params"
@@ -358,7 +363,7 @@
   (if (iae-obj object)
 
       (loop for frame in (remove-if #'(lambda (date) (and interval (or (< date (car interval)) (>= date (cadr interval)))))
-                                    (om::data-stream-get-frames object)
+                                    (om::data-track-get-frames object)
                                     :key 'om::date)
             collect
             (list
