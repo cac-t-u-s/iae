@@ -94,7 +94,7 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
 ;;; IAE
 ;;;==================================
 
-(defclass! IAE (om::om-cleanup-mixin)   ; om::data-stream
+(defclass! IAE (om::om-cleanup-mixin)
   ((iaeengine-ptr :accessor iaeengine-ptr :initform nil)
    (sounds :initarg :sounds :accessor sounds :initform nil :documentation "a sound or list of sounds to build the IAE container on")
    (channels :accessor channels :initform 1 :documentation "number of channels for audio output")
@@ -108,11 +108,8 @@ Use items of this list to instancitate the :pipo-module attribute of IAE."
  - Tracks can be computed and segmented using 'pipo' modules: \"desc\" \"ircamdescriptor\" \"slice:fft\" \"mfcc\" \"<desc,mfcc>\" ...
 
  - Segmentation is computed from the <segmentation> parameter which can be a chop-size or a list (module (param1 val1 (param2 val2) ...) where 'module' is one of \"chop\", \"onseg\", or \"gate\".
-If <segmentation> is an integer value (chop-size), this value is considered the size (in milliseconds) for the \"chop\" segmentation mode.
-"
-
-   )
-  )
+If <segmentation> is an integer value (chop-size), this value is considered the size (in milliseconds) for the \"chop\" segmentation mode."
+   ))
 
 
 (defmethod om::om-cleanup ((self iae::IAE))
@@ -121,6 +118,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
     (iae-lib::iae_delete (iae::iaeengine-ptr self))
     (setf (iae::iaeengine-ptr self) nil)
     ))
+
 
 ;;; called each time an instance is created
 ;;; => mostly memory allocations
@@ -133,6 +131,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                           0.2d0 10000.0d0 ;; minperiod, maxperiod
                           ))
   )
+
 
 ;;======================================================
 ;; INITIALIZATION OF THE PIPO MODULE
@@ -178,13 +177,11 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                       ))
               ))    ;;;  END SPECIFIC IrcamDescriptor SECTION
 
-
           ;(iae-lib::iae_pipo_param_set_int *iae "mvavrg.size" 0 10)
 
           (iae-lib::iae_pipo_param_set_int *iae "descr.hopsize" 0 512)
          ; (iae-lib::iae_pipo_param_set_int *iae "ircamdescriptor.hopsize" 0 512)
           (iae-lib::iae_pipo_param_set_int *iae "mfcc.hopsize" 0 512)
-
 
           (unless (find "mean" (cdr seg-list) :test #'string-equal :key #'car)
             (setf seg-list (append seg-list
@@ -210,8 +207,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                                   ;(om::om-print desc-name)
                                   desc-name
                                   )))
-            )
-          )
+            ))
 
       (om::om-print "Error initializing PiPo" "IAE"))
     ))
@@ -262,6 +258,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 (defmethod om::additional-class-attributes ((self iae::IAE))
   '(iae::channels iae::pipo-module iae::segmentation iae::samplerate))
 
+
 ;;;======================================================
 ;;; READ FROM IAE
 ;;;======================================================
@@ -273,7 +270,6 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;;=========================
 ;;; DESCRIPTORS
 ;;;=========================
-
 
 (om::defmethod! iae-descriptors ((self iae))
   :doc "Returns the names of all descriptor tracks computed in an IAE instance.
@@ -464,6 +460,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
            ))
         ))
 
+
 ;;;=========================
 ;;; KNN
 ;;;=========================
@@ -526,7 +523,6 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 ;;;=========================
 ;;; SYNTH
 ;;;=========================
-
 
 ;;; Returns a sound buffer with a grain from given pos in IAE
 (defmethod! iae-synth ((self iae::IAE) source position dur &key (gain 1.0) (attack 10) (release 10) outputgains outputdelays other-iae-params)
@@ -700,6 +696,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 
 (defmethod om::display-modes-for-object ((self iae::iae))
   '(:mini-view :text :hidden))
+
 
 ;;; do that better with IDs etc.
 (defmethod om::get-cache-display-for-draw ((self iae::IAE) box)
