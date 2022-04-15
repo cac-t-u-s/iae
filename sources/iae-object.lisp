@@ -603,7 +603,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
       ;;; generates the grain
       (iae-lib::iae_trigger *iae)
       (iae-lib::iae_synth *iae nsamples **samples (channels self))
-      (setf (om::buffer omsnd) (om::make-om-sound-buffer-gc :ptr **samples :count 1 :nch (channels self)))
+      (setf (om::buffer omsnd) (om::make-om-sound-buffer-gc :ptr **samples :nch (channels self) :size nsamples))
       omsnd)))
 
 ;;; Returns a sound buffer with a grain from given set of descriptor values in IAE
@@ -689,7 +689,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
               (cffi::foreign-free weight-array))
             )))
 
-      (setf (om::buffer omsnd) (om::make-om-sound-buffer-gc :ptr **samples :count 1 :nch (channels self)))
+      (setf (om::buffer omsnd) (om::make-om-sound-buffer-gc :ptr **samples :nch (channels self) :size nsamples))
 
       omsnd)))
 
