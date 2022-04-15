@@ -331,7 +331,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                  (data (loop for i from 0 to (1- numdesc) collect
                              (let ((val (cffi::mem-aref framedescbuffer :float i)))
                                (if normalized
-                                   (iae-lib::iae_conv_descriptor_to_minmax *iae x val)
+                                   (iae-lib::iae_conv_descriptor_to_minmax *iae i val)
                                  val))
                              )))
             (list time data))
