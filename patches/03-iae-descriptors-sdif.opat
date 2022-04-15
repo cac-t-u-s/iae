@@ -4,9 +4,9 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2021/03/07 11:17:27")
+  (:modified "2022/04/15 23:20:26")
   (:by "om-sharp")
-  (:version 1.0201))
+  (:version 1.06))
  (:window (:size (880 809)) (:position (477 124)))
  (:grid nil)
  (:lock nil)
@@ -17,7 +17,7 @@
    (:group-id nil)
    (:name nil)
    (:x 31)
-   (:y 38)
+   (:y 55)
    (:w 130)
    (:h 53)
    (:color nil)
@@ -30,6 +30,7 @@
    (:show-markers t)
    (:lock :locked)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -96,6 +97,7 @@
    (:showname nil)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -103,7 +105,7 @@
      (:value :choose-file)
      (:reactive nil)))
    (:outputs (:output (:name "SELF") (:reactive nil)))
-   (:window (:size (957 461)) (:position (963 236)))
+   (:window (:size (957 461)) (:position (723 236)))
    (:edition-params)
    (:value
     (:object
@@ -137,7 +139,8 @@
              (:nf 231)))))))
        (:file-pathname
         (:pathname
-         (:directory (:relative :up :up :up :up "OM" "out-files"))
+         (:directory
+          (:relative :up :up :up :up "Documents" "OM#" "out-files"))
          (:device :unspecific)
          (:host :unspecific)
          (:name "descriptors")
@@ -148,9 +151,9 @@
    (:reference outfile)
    (:group-id nil)
    (:name "outfile")
-   (:x 146)
-   (:y 2566/7)
-   (:w 72)
+   (:x 142)
+   (:y 419)
+   (:w 80)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -160,6 +163,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -173,8 +177,8 @@
    (:reference getsdifdata)
    (:group-id nil)
    (:name "getsdifdata")
-   (:x 509)
-   (:y 318)
+   (:x 511)
+   (:y 328)
    (:w 193)
    (:h 29)
    (:color nil)
@@ -185,6 +189,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -236,7 +241,7 @@
    (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
    (:group-id nil)
    (:name "value box")
-   (:x 385.808837890625D0)
+   (:x 390.0D0)
    (:y 193)
    (:w 53)
    (:h 30)
@@ -247,6 +252,7 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "XDSC")
@@ -256,7 +262,7 @@
    (:reference 2d-array)
    (:group-id nil)
    (:name nil)
-   (:x 530)
+   (:x 537)
    (:y 495)
    (:w 261)
    (:h 253)
@@ -269,6 +275,7 @@
    (:showname nil)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -2403,8 +2410,8 @@
    (:group-id nil)
    (:name "flat")
    (:x 546)
-   (:y 382)
-   (:w 55)
+   (:y 402)
+   (:w 62)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -2414,6 +2421,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -2432,8 +2440,8 @@
    (:reference fixnum)
    (:group-id nil)
    (:name "value box")
-   (:x 561)
-   (:y 350)
+   (:x 566)
+   (:y 370)
    (:w 32)
    (:h 30)
    (:color
@@ -2443,6 +2451,7 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value 1)
@@ -2452,8 +2461,8 @@
    (:reference mat-trans)
    (:group-id nil)
    (:name "mat-trans")
-   (:x 522)
-   (:y 414)
+   (:x 526)
+   (:y 434)
    (:w 92)
    (:h 29)
    (:color nil)
@@ -2464,6 +2473,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -2479,7 +2489,7 @@
    (:name "sdiftypedescription")
    (:x 671)
    (:y 414)
-   (:w 140)
+   (:w 153)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -2489,6 +2499,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -2503,10 +2514,10 @@
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 9))
   (:comment
-   (:x 342)
-   (:y 20)
+   (:x 331)
+   (:y 27)
    (:w 233)
-   (:h 25)
+   (:h 26)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border (:number-or-nil (:number 0.0) (:t-or-nil t)))
@@ -2525,7 +2536,7 @@
    (:group-id nil)
    (:name nil)
    (:x 31)
-   (:y 133)
+   (:y 138)
    (:w 187)
    (:h 59)
    (:color nil)
@@ -2537,6 +2548,7 @@
    (:showname nil)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -2575,19 +2587,20 @@
             "my-workspace"
             "in-files"))
           (:device :unspecific)
-          (:host nil)
+          (:host :unspecific)
           (:name "Bassclarinet1")
           (:type "aif"))))))
      (:add-slots
       ((:channels 1)
        (:pipo-module "ircamdescriptor")
-       (:segmentation nil)))))
+       (:segmentation nil)
+       (:samplerate 44100)))))
    (:id 11))
   (:comment
    (:x 598)
-   (:y 259)
+   (:y 268)
    (:w 194)
-   (:h 38)
+   (:h 36)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -2602,8 +2615,8 @@
    (:group-id nil)
    (:name "value box")
    (:x 123)
-   (:y 94)
-   (:w 105)
+   (:y 106)
+   (:w 117)
    (:h 30)
    (:color
     (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
@@ -2612,15 +2625,16 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "ircamdescriptor")
    (:id 13))
   (:comment
-   (:x 197)
-   (:y 58)
-   (:w 116)
-   (:h 53)
+   (:x 242)
+   (:y 99)
+   (:w 139)
+   (:h 36)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -2659,6 +2673,7 @@
        (:text-font nil)
        (:align :center)
        (:icon :top)
+       (:reactive nil)
        (:inputs)
        (:outputs (:output (:name "out") (:reactive nil)))
        (:id 0))
@@ -2681,6 +2696,7 @@
        (:text-font nil)
        (:align :center)
        (:icon :top)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :standard)
@@ -2708,6 +2724,7 @@
        (:text-font nil)
        (:align :center)
        (:icon :top)
+       (:reactive nil)
        (:inputs)
        (:outputs (:output (:name "out") (:reactive nil)))
        (:id 2))
@@ -2730,6 +2747,7 @@
        (:showname nil)
        (:lock nil)
        (:lambda nil)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :standard)
@@ -2769,7 +2787,6 @@
          (:class sdifframe)
          (:slots
           ((:onset 0)
-           (:item-time nil)
            (:item-internal-time nil)
            (:item-type nil)
            (:attributes nil)
@@ -2785,7 +2802,7 @@
        (:name "car")
        (:x 133)
        (:y 126)
-       (:w 54)
+       (:w 56)
        (:h 30)
        (:color nil)
        (:border nil)
@@ -2795,6 +2812,7 @@
        (:icon :left)
        (:lock nil)
        (:lambda nil)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :standard)
@@ -2820,6 +2838,7 @@
        (:icon :left)
        (:lock nil)
        (:lambda nil)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :standard)
@@ -2847,6 +2866,7 @@
        (:showname nil)
        (:lock nil)
        (:lambda nil)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :standard)
@@ -2881,7 +2901,7 @@
        (:name "list")
        (:x 313)
        (:y 262)
-       (:w 54)
+       (:w 62)
        (:h 30)
        (:color nil)
        (:border nil)
@@ -2891,6 +2911,7 @@
        (:icon :left)
        (:lock nil)
        (:lambda nil)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :optional)
@@ -2906,7 +2927,7 @@
        (:name "cdr")
        (:x 468)
        (:y 123)
-       (:w 55)
+       (:w 56)
        (:h 30)
        (:color nil)
        (:border nil)
@@ -2916,6 +2937,7 @@
        (:icon :left)
        (:lock nil)
        (:lambda nil)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :standard)
@@ -2941,6 +2963,7 @@
        (:icon :left)
        (:lock nil)
        (:lambda nil)
+       (:reactive nil)
        (:inputs
         (:input
          (:type :standard)
@@ -2972,6 +2995,7 @@
        (:text-font nil)
        (:align nil)
        (:lock nil)
+       (:reactive nil)
        (:inputs)
        (:outputs (:output (:name "value") (:reactive nil)))
        (:value list)
@@ -3001,9 +3025,10 @@
    (:text-font nil)
    (:align :center)
    (:display :hidden)
+   (:pre-delay 0)
    (:lock nil)
    (:lambda :lambda)
-   (:pre-delay 0)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -3022,8 +3047,8 @@
    (:reference mapcar)
    (:group-id nil)
    (:name "mapcar")
-   (:x 76.808837890625D0)
-   (:y 2370/7)
+   (:x 77.0D0)
+   (:y 2419/7)
    (:w 77)
    (:h 29)
    (:color nil)
@@ -3034,6 +3059,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -3064,6 +3090,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -3085,7 +3112,7 @@
    (:name "sdif-types-from-field-names")
    (:x 260.0D0)
    (:y 409)
-   (:w 196)
+   (:w 201)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -3095,6 +3122,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -3118,7 +3146,7 @@
    (:reference fixnum)
    (:group-id 0)
    (:name "vb")
-   (:x 228.0D0)
+   (:x 231.0D0)
    (:y 1894/7)
    (:w 32)
    (:h 30)
@@ -3128,6 +3156,7 @@
    (:text-font nil)
    (:align :left)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value 0)
@@ -3140,7 +3169,7 @@
    (:name "get-sound-descriptors")
    (:x 133.0D0)
    (:y 2153/7)
-   (:w 161)
+   (:w 165)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -3150,6 +3179,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -3168,9 +3198,9 @@
    (:reference (:symbol "DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "descriptors")
-   (:x 245.0D0)
+   (:x 243.0D0)
    (:y 2566/7)
-   (:w 98)
+   (:w 105)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -3180,6 +3210,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -3194,7 +3225,7 @@
    (:group-id nil)
    (:name "value box")
    (:x 130)
-   (:y 409)
+   (:y 2706/7)
    (:w 103)
    (:h 30)
    (:color
@@ -3204,15 +3235,16 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "descriptors.sdif")
    (:id 22))
   (:comment
-   (:x 346)
-   (:y 141)
-   (:w 103)
-   (:h 53)
+   (:x 356)
+   (:y 154)
+   (:w 129)
+   (:h 36)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)

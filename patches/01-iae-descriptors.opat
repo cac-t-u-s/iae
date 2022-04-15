@@ -4,9 +4,9 @@
  (:doc "")
  (:info
   (:created "2017/12/22 16:32:44")
-  (:modified "2021/03/07 11:17:02")
+  (:modified "2022/04/15 23:17:07")
   (:by "om-sharp")
-  (:version 1.0201))
+  (:version 1.06))
  (:window (:size (975 853)) (:position (116 63)))
  (:grid nil)
  (:lock nil)
@@ -30,6 +30,7 @@
    (:show-markers t)
    (:lock :locked)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -88,6 +89,7 @@
    (:showname nil)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -997,6 +999,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -1012,7 +1015,7 @@
    (:name "cdr")
    (:x 315)
    (:y 354)
-   (:w 55)
+   (:w 56)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -1022,6 +1025,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -1031,10 +1035,10 @@
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 3))
   (:comment
-   (:x 216)
-   (:y 354)
-   (:w 111)
-   (:h 38)
+   (:x 200)
+   (:y 351)
+   (:w 116)
+   (:h 36)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -1049,8 +1053,8 @@
    (:reference (:symbol "IAE" "IAE"))
    (:group-id nil)
    (:name nil)
-   (:x 130)
-   (:y 167)
+   (:x 131)
+   (:y 160)
    (:w 446)
    (:h 55)
    (:color nil)
@@ -1062,6 +1066,7 @@
    (:showname nil)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -1127,7 +1132,8 @@
          "SpectralCrest"
          "PerceptualSpectralSlope"
          "HarmonicEnergy"))
-       (:segmentation nil)))))
+       (:segmentation nil)
+       (:samplerate 44100)))))
    (:id 5))
   (:box
    (:library "iae")
@@ -1136,8 +1142,8 @@
    (:group-id nil)
    (:name "get-sound-descriptors")
    (:x 166)
-   (:y 270)
-   (:w 161)
+   (:y 259)
+   (:w 165)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -1147,6 +1153,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -1165,8 +1172,8 @@
    (:reference fixnum)
    (:group-id nil)
    (:name "value box")
-   (:x 261)
-   (:y 231)
+   (:x 264)
+   (:y 227)
    (:w 32)
    (:h 30)
    (:color
@@ -1176,6 +1183,7 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value 0)
@@ -1196,6 +1204,7 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "mfcc")
@@ -1216,6 +1225,7 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "ircamdescriptor")
@@ -1236,15 +1246,16 @@
    (:text-font nil)
    (:align nil)
    (:lock nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "value") (:reactive nil)))
    (:value "descr")
    (:id 10))
   (:comment
-   (:x 205)
-   (:y 1)
-   (:w 371)
-   (:h 85)
+   (:x 129)
+   (:y 11)
+   (:w 432)
+   (:h 78)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -1261,8 +1272,8 @@
   (:comment
    (:x 684)
    (:y 48)
-   (:w 112)
-   (:h 38)
+   (:w 127)
+   (:h 36)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -1289,6 +1300,7 @@
    (:showname nil)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -1326,7 +1338,7 @@
    (:x 331)
    (:y 261)
    (:w 194)
-   (:h 38)
+   (:h 36)
    (:fgcolor nil)
    (:bgcolor nil)
    (:border nil)
@@ -1341,9 +1353,9 @@
    (:reference (:symbol "IAE-DESCRIPTORS" "IAE"))
    (:group-id nil)
    (:name "iae-descriptors")
-   (:x 38)
+   (:x 28)
    (:y 270)
-   (:w 120)
+   (:w 129)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -1353,6 +1365,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs
     (:input
      (:type :standard)
@@ -1443,7 +1456,7 @@
    (:name "ircam-descriptors-names")
    (:x 688)
    (:y 83)
-   (:w 175)
+   (:w 177)
    (:h 29)
    (:color nil)
    (:border nil)
@@ -1453,6 +1466,7 @@
    (:icon :left)
    (:lock nil)
    (:lambda nil)
+   (:reactive nil)
    (:inputs)
    (:outputs (:output (:name "out") (:reactive nil)))
    (:id 17)))
