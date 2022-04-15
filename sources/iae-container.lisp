@@ -429,7 +429,7 @@
 
     (if (buffer-player object)
         (om::stop-buffer-player (buffer-player object))
-      (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
+      (om::om-print-dbg "No audio output buffer initialized for IAE-Container!"))
 
     (unless (eq current-state :stop)
       (iae-reset object))
@@ -441,7 +441,7 @@
 (defmethod om::player-pause-object ((self om::scheduler) (object IAE-Container))
   (if (buffer-player object)
       (om::pause-buffer-player (buffer-player object))
-    (om::om-beep-msg "No audio output buffer initialized for IAE-Container!"))
+    (om::om-print-dbg "No audio output buffer initialized for IAE-Container!"))
   (call-next-method))
 
 (defmethod om::player-continue-object ((self om::scheduler) (object IAE-Container))
