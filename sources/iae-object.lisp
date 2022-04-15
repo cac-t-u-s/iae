@@ -302,10 +302,10 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                 when (and (>= curr-time t1) (or (null t2) (<= curr-time t2)))
                 collect
                 (cons (- curr-time t1)
-                      (loop for x from 0 to (1- numdesc) collect
-                            (let ((val (fli:dereference framedescbuffer :index x :type :float)))
+                      (loop for i from 0 to (1- numdesc) collect
+                            (let ((val (fli:dereference framedescbuffer :index i :type :float)))
                               (if normalized
-                                  (iae-lib::iae_conv_descriptor_to_minmax *iae x val)
+                                  (iae-lib::iae_conv_descriptor_to_minmax *iae i val)
                                 val))))
                 ))
       (fli:free-foreign-object framedescbuffer))
@@ -323,12 +323,12 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
              (descriptors self))
 
     (let* ((*iae (iaeengine-ptr self))
-           (n (length (descriptors self)))
-           (framedescbuffer (cffi::foreign-alloc :float :count n)))
+           (numdesc (length (descriptors self)))
+           (framedescbuffer (cffi::foreign-alloc :float :count numdesc)))
 
       (unwind-protect
           (let* ((time (iae-lib::iae_get_descriptor_data *iae src-index seg-index framedescbuffer))
-                 (data (loop for i from 0 to (1- n) collect
+                 (data (loop for i from 0 to (1- numdesc) collect
                              (let ((val (cffi::mem-aref framedescbuffer :float i)))
                                (if normalized
                                    (iae-lib::iae_conv_descriptor_to_minmax *iae x val)
