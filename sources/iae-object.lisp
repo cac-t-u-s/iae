@@ -552,7 +552,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
                        dur))
 
            (nsamples (ceiling (* graindur (iae::samplerate self) 0.001)))
-           (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
+           (omsnd (make-instance 'om::internal-sound :n-channels (channels self) :smpl-type :float
                                  :n-samples nsamples :sample-rate (iae::samplerate self)))
            (**samples (om::make-audio-buffer (channels self) nsamples)))
 
@@ -619,7 +619,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
   (when (iaeengine-ptr self)
     (let* ((*iae (iaeengine-ptr self))
            (nsamples (ceiling (* dur (iae::samplerate self) 0.001)))
-           (omsnd (make-instance 'om::om-internal-sound :n-channels (channels self) :smpl-type :float
+           (omsnd (make-instance 'om::internal-sound :n-channels (channels self) :smpl-type :float
                                  :n-samples nsamples :sample-rate (iae::samplerate self)))
            (**samples (om::make-audio-buffer (channels self) nsamples))
            ;; (framedescbuffer (fli::allocate-foreign-object :type :float :nelems (length (descriptors self))))
@@ -713,5 +713,3 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
            for y = 16 then (+ y 10) do
            (om::om-draw-string 10 y str))
      )))
-
-

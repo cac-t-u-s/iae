@@ -274,7 +274,7 @@
 ;;;===============================
 
 ;;; add an audio grain in the IAE-container's buffer-player by copying from an existing audio buffer (coming out of IAE-synth)
-(defmethod iae-add-grain ((iae-c iae-container) (snd om::om-internal-sound) (at integer))
+(defmethod iae-add-grain ((iae-c iae-container) (snd om::internal-sound) (at integer))
   (when (buffer-player iae-c)
     (let* ((bp (buffer-player iae-c))
            (iae (iae-obj iae-c))

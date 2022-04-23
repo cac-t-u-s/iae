@@ -1976,7 +1976,7 @@
    (:inputs
     (:input
      (:type :standard)
-     (:name "OM-INTERNAL-SOUND")
+     (:name "internal-sound")
      (:value nil)
      (:reactive nil)))
    (:outputs (:output (:name "out") (:reactive nil)))

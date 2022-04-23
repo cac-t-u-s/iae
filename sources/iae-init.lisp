@@ -64,7 +64,7 @@
 (defun get-iae-snd (size)
   (let ((buffer (make-audio-buffer 1 size)))
     (iae::iae_synth iae::*iae* 44100 buffer 1)
-    (let ((snd (make-instance 'om::om-internal-sound :n-channels 1 :smpl-type :float
+    (let ((snd (make-instance 'om::internal-sound :n-channels 1 :smpl-type :float
                               :n-samples 44100 :sample-rate 44100)))
       (setf (buffer snd)
             (om::make-om-sound-buffer :ptr buffer :count 1 :nch 1))
@@ -73,9 +73,3 @@
 
 
 |#
-
-
-
-
-
-
