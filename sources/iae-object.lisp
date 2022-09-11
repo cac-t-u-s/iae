@@ -708,7 +708,7 @@ If <segmentation> is an integer value (chop-size), this value is considered the 
 (defmethod om::draw-mini-view ((self iae::IAE) (box t) x y w h &optional time)
   (let ((display-cache (om::get-display-draw box)))
     (oa::om-with-font
-     (oa::om-def-font :font1 :size 8)
+     (oa::om-def-font :small)
      (loop for str in (om::string-lines-to-list (car display-cache))
            for y = 16 then (+ y 10) do
            (om::om-draw-string 10 y str))
